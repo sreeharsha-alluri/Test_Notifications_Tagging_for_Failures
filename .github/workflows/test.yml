@@ -37,7 +37,7 @@ jobs:
 
       - name: Notify Teams on Failure
         if: always()
-        uses: ./.github/actions/notify-teams
+        uses: ./.github/actions/notify_teams
         with:
           overall-status: failure
           run-url: ${{ github.run_url }}
