@@ -59,3 +59,9 @@ jobs:
           run-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}  # Pass the run URL
           workflow-status: ${{ needs.overall_status.outputs.overall_status }}  # Pass the workflow status
           webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}  # Pass the webhook URL from secrets
+          user1-name: ${{ secrets.TEAMS_USER1_NAME }}  # User 1 name from secrets
+          user1-id: ${{ secrets.TEAMS_USER1_ID }}      # User 1 ID from secrets
+          user2-name: ${{ secrets.TEAMS_USER2_NAME }}  # User 2 name from secrets
+          user2-id: ${{ secrets.TEAMS_USER2_ID }}      # User 2 ID from secrets
+          user3-name: ${{ secrets.TEAMS_USER3_NAME }}  # User 3 name from secrets
+          user3-id: ${{ secrets.TEAMS_USER3_ID }}      # User 3 ID from secrets
