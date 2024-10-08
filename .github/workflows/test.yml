@@ -23,6 +23,7 @@ jobs:
 
   overall_status:
     runs-on: ubuntu-latest
+    if: always()
     needs: linux-build-and-test
     outputs:
       overall_status: ${{ steps.set-status.outputs.overall_status }}
