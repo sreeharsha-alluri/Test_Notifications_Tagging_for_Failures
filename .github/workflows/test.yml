@@ -1,0 +1,45 @@
+name: Notify Teams Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build Step
+        id: build
+        run: |
+          echo "Building the project..."
+          # Simulate a successful build
+          echo "Build completed successfully."
+          echo "status=success" >> $GITHUB_ENV
+      
+      - name: Notify Teams on Success
+        if: env.status == 'success'
+        uses: ./.github/actions/notify-teams
+        with:
+          overall-status: success
+          run-url: ${{ github.run_url }}
+          action-name: Build Step
+          workflow-status: Completed
+
+#       - name: Simulate Failure
+#         id: failure
+#         run: |
+#           echo "Simulating a failure..."
+#           exit 1
+
+      - name: Notify Teams on Failure
+        if: failure()
+        uses: ./.github/actions/notify-teams
+        with:
+          overall-status: failure
+          run-url: ${{ github.run_url }}
+          action-name: Simulate Failure
+          workflow-status: Failed
