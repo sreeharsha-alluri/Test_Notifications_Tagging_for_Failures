@@ -21,7 +21,19 @@ runs:
     - name: Send Notification
       shell: bash
       run: |
-        WEBHOOK_URL="https://amdcloud.webhook.office.com/webhookb2/133d4f16-689b-4281-a94b-44725b948c77@3dd8961f-e488-4e60-8e11-a82d994e183d/IncomingWebhook/20c43fc799fd49e9813582813c638323/f9e22351-f1c9-494f-88c5-8e04accf2ffe"
+        WEBHOOK_URL="${{ secrets.TEAMS_WEBHOOK_URL }}"
+        
+        # User 1
+        USER1_NAME="${{ vars.TEAMS_USER1_NAME }}"
+        USER1_ID="${{ vars.TEAMS_USER1_ID }}"
+        
+        # User 2
+        USER2_NAME="${{ vars.TEAMS_USER2_NAME }}"
+        USER2_ID="${{ vars.TEAMS_USER2_ID }}"
+        
+        # User 3
+        USER3_NAME="${{ vars.TEAMS_USER3_NAME }}"
+        USER3_ID="${{ vars.TEAMS_USER3_ID }}"
 
         if [[ "${{ inputs.overall-status }}" == "failure" ]]; then
           curl -H 'Content-Type: application/json' \
@@ -38,7 +50,7 @@ runs:
                               "type": "TextBlock",
                               "size": "Large",
                               "weight": "Bolder",
-                              "text": "<at>sreehass</at> <at>sreehass</at> <at>sreehass</at>"
+                              "text": "<at>'"${USER1_NAME}"'</at> <at>'"${USER2_NAME}"'</at> <at>'"${USER3_NAME}"'</at>"
                             },
                             {
                               "type": "TextBlock",
@@ -61,26 +73,26 @@ runs:
                             "entities": [
                               {
                                 "type": "mention",
-                                "text": "<at>sreehass</at>",
+                                "text": "<at>'"${USER1_NAME}"'</at>",
                                 "mentioned": {
-                                  "id": "sreehass@amd.com",
-                                  "name": "A S S K, Sreeharsha"
+                                  "id": "'"${USER1_ID}"'",
+                                  "name": "'"${USER1_NAME}"'"
                                 }
                               },
                               {
                                 "type": "mention",
-                                "text": "<at>sreehass</at>",
+                                "text": "<at>'"${USER2_NAME}"'</at>",
                                 "mentioned": {
-                                  "id": "sreehass@amd.com",
-                                  "name": "A S S K, Sreeharsha"
+                                  "id": "'"${USER2_ID}"'",
+                                  "name": "'"${USER2_NAME}"'"
                                 }
                               },
                               {
                                 "type": "mention",
-                                "text": "<at>sreehass</at>",
+                                "text": "<at>'"${USER3_NAME}"'</at>",
                                 "mentioned": {
-                                  "id": "sreehass@amd.com",
-                                  "name": "A S S K, Sreeharsha"
+                                  "id": "'"${USER3_ID}"'",
+                                  "name": "'"${USER3_NAME}"'"
                                 }
                               }
                             ]
