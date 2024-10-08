@@ -58,3 +58,4 @@ jobs:
           overall-status: ${{ needs.overall_status.outputs.overall_status }}  # Pass the overall status
           run-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}  # Pass the run URL
           workflow-status: ${{ needs.overall_status.outputs.overall_status }}  # Pass the workflow status
+          webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}  # Pass the webhook URL from secrets
