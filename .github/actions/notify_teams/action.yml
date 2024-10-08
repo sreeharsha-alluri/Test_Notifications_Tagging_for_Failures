@@ -14,6 +14,9 @@ inputs:
   workflow-status:
     description: 'Status of the workflow'
     required: true
+  webhook-url:
+    description: 'Webhook URL for Microsoft Teams'
+    required: true
 
 runs:
   using: "composite"
@@ -21,8 +24,6 @@ runs:
     - name: Send Notification
       shell: bash
       run: |
-        WEBHOOK_URL="${{ secrets.TEAMS_WEBHOOK_URL }}"
-        
         # User 1
         USER1_NAME="${{ vars.TEAMS_USER1_NAME }}"
         USER1_ID="${{ vars.TEAMS_USER1_ID }}"
@@ -108,7 +109,7 @@ runs:
                       }
                     ]
                   }' \
-               "$WEBHOOK_URL"
+               "${{ inputs.webhook-url }}"
         else
           curl -H 'Content-Type: application/json' \
                -d '{
@@ -150,5 +151,5 @@ runs:
                       }
                     ]
                   }' \
-               "$WEBHOOK_URL"
+               "${{ inputs.webhook-url }}"
         fi
