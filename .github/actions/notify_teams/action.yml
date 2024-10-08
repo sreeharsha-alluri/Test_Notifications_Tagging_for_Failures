@@ -17,6 +17,24 @@ inputs:
   webhook-url:
     description: 'Webhook URL for Microsoft Teams'
     required: true
+  user1-name:
+    description: 'Name of user 1'
+    required: true
+  user1-id:
+    description: 'ID of user 1'
+    required: true
+  user2-name:
+    description: 'Name of user 2'
+    required: true
+  user2-id:
+    description: 'ID of user 2'
+    required: true
+  user3-name:
+    description: 'Name of user 3'
+    required: true
+  user3-id:
+    description: 'ID of user 3'
+    required: true
 
 runs:
   using: "composite"
@@ -24,18 +42,6 @@ runs:
     - name: Send Notification
       shell: bash
       run: |
-        # User 1
-        USER1_NAME="${{ vars.TEAMS_USER1_NAME }}"
-        USER1_ID="${{ vars.TEAMS_USER1_ID }}"
-        
-        # User 2
-        USER2_NAME="${{ vars.TEAMS_USER2_NAME }}"
-        USER2_ID="${{ vars.TEAMS_USER2_ID }}"
-        
-        # User 3
-        USER3_NAME="${{ vars.TEAMS_USER3_NAME }}"
-        USER3_ID="${{ vars.TEAMS_USER3_ID }}"
-
         if [[ "${{ inputs.overall-status }}" == "failure" ]]; then
           curl -H 'Content-Type: application/json' \
                -d '{
@@ -51,7 +57,7 @@ runs:
                               "type": "TextBlock",
                               "size": "Large",
                               "weight": "Bolder",
-                              "text": "<at>'"${USER1_NAME}"'</at> <at>'"${USER2_NAME}"'</at> <at>'"${USER3_NAME}"'</at>"
+                              "text": "<at>'"${{ inputs.user1-name }}"'</at> <at>'"${{ inputs.user2-name }}"'</at> <at>'"${{ inputs.user3-name }}"'</at>"
                             },
                             {
                               "type": "TextBlock",
@@ -74,26 +80,26 @@ runs:
                             "entities": [
                               {
                                 "type": "mention",
-                                "text": "<at>'"${USER1_NAME}"'</at>",
+                                "text": "<at>'"${{ inputs.user1-name }}"'</at>",
                                 "mentioned": {
-                                  "id": "'"${USER1_ID}"'",
-                                  "name": "'"${USER1_NAME}"'"
+                                  "id": "'"${{ inputs.user1-id }}"'",
+                                  "name": "'"${{ inputs.user1-name }}"'"
                                 }
                               },
                               {
                                 "type": "mention",
-                                "text": "<at>'"${USER2_NAME}"'</at>",
+                                "text": "<at>'"${{ inputs.user2-name }}"'</at>",
                                 "mentioned": {
-                                  "id": "'"${USER2_ID}"'",
-                                  "name": "'"${USER2_NAME}"'"
+                                  "id": "'"${{ inputs.user2-id }}"'",
+                                  "name": "'"${{ inputs.user2-name }}"'"
                                 }
                               },
                               {
                                 "type": "mention",
-                                "text": "<at>'"${USER3_NAME}"'</at>",
+                                "text": "<at>'"${{ inputs.user3-name }}"'</at>",
                                 "mentioned": {
-                                  "id": "'"${USER3_ID}"'",
-                                  "name": "'"${USER3_NAME}"'"
+                                  "id": "'"${{ inputs.user3-id }}"'",
+                                  "name": "'"${{ inputs.user3-name }}"'"
                                 }
                               }
                             ]
