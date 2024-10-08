@@ -29,14 +29,14 @@ jobs:
           action-name: Build Step
           workflow-status: Completed
 
-#       - name: Simulate Failure
-#         id: failure
-#         run: |
-#           echo "Simulating a failure..."
-#           exit 1
+      # - name: Simulate Failure
+      #   id: failure
+      #   run: |
+      #     echo "Simulating a failure..."
+      #     exit 1
 
       - name: Notify Teams on Failure
-        if: failure()
+        if: always()
         uses: ./.github/actions/notify-teams
         with:
           overall-status: failure
