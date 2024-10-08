@@ -19,7 +19,7 @@ jobs:
           echo "Building the project"
           # Simulate a successful build
           echo "Build completed successfully."
-          # exit 1
+          exit 1
           echo "status=success" >> $GITHUB_ENV
 
   overall_status:
