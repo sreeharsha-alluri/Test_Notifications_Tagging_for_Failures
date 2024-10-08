@@ -15,7 +15,7 @@ jobs:
       - name: Build Step
         id: build
         run: |
-          echo "Building the project..."
+          echo "Building the project"
           # Simulate a successful build
           echo "Build completed successfully."
           echo "status=success" >> $GITHUB_ENV
@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Send Notifications
-        uses: ./.github/actions/notify-teams  # Path to your composite action
+        uses: ./.github/actions/notify_teams  # Path to your composite action
         with:
           action-name: ${{ github.workflow }}  # Pass the workflow name
           overall-status: ${{ needs.overall_status.outputs.overall_status }}  # Pass the overall status
