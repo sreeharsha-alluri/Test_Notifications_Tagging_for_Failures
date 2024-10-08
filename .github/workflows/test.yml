@@ -22,7 +22,7 @@ jobs:
       
       - name: Notify Teams on Success
         if: env.status == 'success'
-        uses: ./.github/actions/notify-teams
+        uses: ./.github/actions/notify_teams
         with:
           overall-status: success
           run-url: ${{ github.run_url }}
