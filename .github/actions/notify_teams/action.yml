@@ -115,7 +115,7 @@ runs:
                   }' \
                "${{ inputs.webhook-url }}"
         elif [[ "${{ inputs.overall-status }}" == "aborted" ]]; then
-          # Aborted case - no tagging, just a warning
+          # Aborted case - No tagging
           curl -H 'Content-Type: application/json' \
                -d '{
                     "type": "message",
@@ -164,7 +164,7 @@ runs:
                   }' \
                "${{ inputs.webhook-url }}"
         else
-          # Success case - no tagging, just success message
+          # Success case - Modify Job Name and Status coloring
           curl -H 'Content-Type: application/json' \
                -d '{
                     "type": "message",
@@ -184,12 +184,12 @@ runs:
                             {
                               "type": "TextBlock",
                               "text": "**Workflow Status:** Success",
-                              "color": "Good"
+                              "color": "Good"  # This will make the "Workflow Status" line green
                             },
                             {
                               "type": "TextBlock",
                               "text": "The build and test completed successfully.",
-                              "color": "Good"
+                              "color": "Good"  # This will make the success message green
                             }
                           ],
                           "msteams": {
