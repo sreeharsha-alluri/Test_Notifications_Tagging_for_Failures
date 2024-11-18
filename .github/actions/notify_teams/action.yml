@@ -40,6 +40,7 @@ runs:
       shell: bash
       run: |
         if [[ "${{ inputs.overall-status }}" == "failure" ]]; then
+          # Failure case - include tagging
           curl -H 'Content-Type: application/json' \
                -d '{
                     "type": "message",
@@ -114,6 +115,7 @@ runs:
                   }' \
                "${{ inputs.webhook-url }}"
         elif [[ "${{ inputs.overall-status }}" == "aborted" ]]; then
+          # Aborted case - no tagging, just a warning
           curl -H 'Content-Type: application/json' \
                -d '{
                     "type": "message",
@@ -147,33 +149,7 @@ runs:
                             }
                           ],
                           "msteams": {
-                            "width": "Full",
-                            "entities": [
-                              {
-                                "type": "mention",
-                                "text": "<at>'"${{ inputs.user1-name }}"'</at>",
-                                "mentioned": {
-                                  "id": "'"${{ inputs.user1-id }}"'",
-                                  "name": "'"${{ inputs.user1-name }}"'"
-                                }
-                              },
-                              {
-                                "type": "mention",
-                                "text": "<at>'"${{ inputs.user2-name }}"'</at>",
-                                "mentioned": {
-                                  "id": "'"${{ inputs.user2-id }}"'",
-                                  "name": "'"${{ inputs.user2-name }}"'"
-                                }
-                              },
-                              {
-                                "type": "mention",
-                                "text": "<at>'"${{ inputs.user3-name }}"'</at>",
-                                "mentioned": {
-                                  "id": "'"${{ inputs.user3-id }}"'",
-                                  "name": "'"${{ inputs.user3-name }}"'"
-                                }
-                              }
-                            ]
+                            "width": "Full"
                           },
                           "actions": [
                             {
@@ -188,6 +164,7 @@ runs:
                   }' \
                "${{ inputs.webhook-url }}"
         else
+          # Success case - no tagging, just success message
           curl -H 'Content-Type: application/json' \
                -d '{
                     "type": "message",
@@ -202,12 +179,7 @@ runs:
                               "type": "TextBlock",
                               "size": "Large",
                               "weight": "Bolder",
-                              "text": "<at>'"${{ inputs.user1-name }}"'</at> <at>'"${{ inputs.user2-name }}"'</at> <at>'"${{ inputs.user3-name }}"'</at>"
-                            },
-                            {
-                              "type": "TextBlock",
-                              "text": "**Job Name:** '"${{ inputs.action-name }}"'",
-                              "color": "Good"
+                              "text": "**Job Name:** '"${{ inputs.action-name }}"'"
                             },
                             {
                               "type": "TextBlock",
