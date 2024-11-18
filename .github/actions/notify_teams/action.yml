@@ -3,16 +3,13 @@ description: Sends a notification to Microsoft Teams with build status.
 
 inputs:
   overall-status:
-    description: 'Overall status of the build (success or failure)'
+    description: 'Overall status of the build (success, failure, or aborted)'
     required: true
   run-url:
     description: 'URL to the GitHub Actions run'
     required: true
   action-name:
     description: 'Name of the job or action'
-    required: true
-  workflow-status:
-    description: 'Status of the workflow'
     required: true
   webhook-url:
     description: 'Webhook URL for Microsoft Teams'
@@ -66,13 +63,77 @@ runs:
                             },
                             {
                               "type": "TextBlock",
-                              "text": "**Workflow Status:** '"${{ inputs.workflow-status }}"'",
+                              "text": "The build and test failed. Please check the logs.",
                               "color": "Attention"
+                            }
+                          ],
+                          "msteams": {
+                            "width": "Full",
+                            "entities": [
+                              {
+                                "type": "mention",
+                                "text": "<at>'"${{ inputs.user1-name }}"'</at>",
+                                "mentioned": {
+                                  "id": "'"${{ inputs.user1-id }}"'",
+                                  "name": "'"${{ inputs.user1-name }}"'"
+                                }
+                              },
+                              {
+                                "type": "mention",
+                                "text": "<at>'"${{ inputs.user2-name }}"'</at>",
+                                "mentioned": {
+                                  "id": "'"${{ inputs.user2-id }}"'",
+                                  "name": "'"${{ inputs.user2-name }}"'"
+                                }
+                              },
+                              {
+                                "type": "mention",
+                                "text": "<at>'"${{ inputs.user3-name }}"'</at>",
+                                "mentioned": {
+                                  "id": "'"${{ inputs.user3-id }}"'",
+                                  "name": "'"${{ inputs.user3-name }}"'"
+                                }
+                              }
+                            ]
+                          },
+                          "actions": [
+                            {
+                              "type": "Action.OpenUrl",
+                              "title": "View Run",
+                              "url": "'"${{ inputs.run-url }}"'"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }' \
+               "${{ inputs.webhook-url }}"
+        elif [[ "${{ inputs.overall-status }}" == "aborted" ]]; then
+          curl -H 'Content-Type: application/json' \
+               -d '{
+                    "type": "message",
+                    "attachments": [
+                      {
+                        "contentType": "application/vnd.microsoft.card.adaptive",
+                        "content": {
+                          "type": "AdaptiveCard",
+                          "version": "1.2",
+                          "body": [
+                            {
+                              "type": "TextBlock",
+                              "size": "Large",
+                              "weight": "Bolder",
+                              "text": "<at>'"${{ inputs.user1-name }}"'</at> <at>'"${{ inputs.user2-name }}"'</at> <at>'"${{ inputs.user3-name }}"'</at>"
                             },
                             {
                               "type": "TextBlock",
-                              "text": "The build and test failed. Please check the logs.",
-                              "color": "Attention"
+                              "text": "**Job Name:** '"${{ inputs.action-name }}"'",
+                              "color": "Warning"
+                            },
+                            {
+                              "type": "TextBlock",
+                              "text": "The build and test was aborted.",
+                              "color": "Warning"
                             }
                           ],
                           "msteams": {
@@ -131,11 +192,6 @@ runs:
                               "type": "TextBlock",
                               "text": "**Job Name:** '"${{ inputs.action-name }}"'",
                               "color": "Good"  
-                            },
-                            {
-                              "type": "TextBlock",
-                              "text": "**Workflow Status:** '"${{ inputs.workflow-status }}"'",
-                              "color": "Good" 
                             },
                             {
                               "type": "TextBlock",
