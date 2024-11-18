@@ -63,6 +63,11 @@ runs:
                             },
                             {
                               "type": "TextBlock",
+                              "text": "**Workflow Status:** Failure",
+                              "color": "Attention"
+                            },
+                            {
+                              "type": "TextBlock",
                               "text": "The build and test failed. Please check the logs.",
                               "color": "Attention"
                             }
@@ -132,6 +137,11 @@ runs:
                             },
                             {
                               "type": "TextBlock",
+                              "text": "**Workflow Status:** Aborted",
+                              "color": "Warning"
+                            },
+                            {
+                              "type": "TextBlock",
                               "text": "The build and test was aborted.",
                               "color": "Warning"
                             }
@@ -190,13 +200,24 @@ runs:
                           "body": [
                             {
                               "type": "TextBlock",
+                              "size": "Large",
+                              "weight": "Bolder",
+                              "text": "<at>'"${{ inputs.user1-name }}"'</at> <at>'"${{ inputs.user2-name }}"'</at> <at>'"${{ inputs.user3-name }}"'</at>"
+                            },
+                            {
+                              "type": "TextBlock",
                               "text": "**Job Name:** '"${{ inputs.action-name }}"'",
-                              "color": "Good"  
+                              "color": "Good"
+                            },
+                            {
+                              "type": "TextBlock",
+                              "text": "**Workflow Status:** Success",
+                              "color": "Good"
                             },
                             {
                               "type": "TextBlock",
                               "text": "The build and test completed successfully.",
-                              "color": "Good"  
+                              "color": "Good"
                             }
                           ],
                           "msteams": {
