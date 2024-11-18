@@ -40,7 +40,7 @@ runs:
       shell: bash
       run: |
         if [[ "${{ inputs.overall-status }}" == "failure" ]]; then
-          # Failure case - Include tagging
+          # Failure case - Use Attention color for all lines (red)
           curl -H 'Content-Type: application/json' \
                -d '{
                     "type": "message",
@@ -55,7 +55,8 @@ runs:
                               "type": "TextBlock",
                               "size": "Large",
                               "weight": "Bolder",
-                              "text": "<at>'"${{ inputs.user1-name }}"'</at> <at>'"${{ inputs.user2-name }}"'</at> <at>'"${{ inputs.user3-name }}"'</at>"
+                              "text": "<at>'"${{ inputs.user1-name }}"'</at> <at>'"${{ inputs.user2-name }}"'</at> <at>'"${{ inputs.user3-name }}"'</at>",
+                              "color": "Attention"
                             },
                             {
                               "type": "TextBlock",
@@ -115,7 +116,7 @@ runs:
                   }' \
                "${{ inputs.webhook-url }}"
         elif [[ "${{ inputs.overall-status }}" == "aborted" ]]; then
-          # Aborted case - No mentions (disabled tagging)
+          # Aborted case - Use Warning color for all lines (yellow)
           curl -H 'Content-Type: application/json' \
                -d '{
                     "type": "message",
@@ -130,7 +131,8 @@ runs:
                               "type": "TextBlock",
                               "size": "Large",
                               "weight": "Bolder",
-                              "text": "**Job Name:** '"${{ inputs.action-name }}"'"
+                              "text": "**Job Name:** '"${{ inputs.action-name }}"'",
+                              "color": "Warning"
                             },
                             {
                               "type": "TextBlock",
@@ -159,7 +161,7 @@ runs:
                   }' \
                "${{ inputs.webhook-url }}"
         else
-          # Success case - Modify Job Name and Status coloring
+          # Success case - Use Good color for all lines (green)
           curl -H 'Content-Type: application/json' \
                -d '{
                     "type": "message",
@@ -174,17 +176,18 @@ runs:
                               "type": "TextBlock",
                               "size": "Large",
                               "weight": "Bolder",
-                              "text": "**Job Name:** '"${{ inputs.action-name }}"'"
+                              "text": "**Job Name:** '"${{ inputs.action-name }}"'",
+                              "color": "Good"
                             },
                             {
                               "type": "TextBlock",
                               "text": "**Workflow Status:** ✅ Success",
-                              "color": "Good"  # This will make the "Workflow Status" line green
+                              "color": "Good"
                             },
                             {
                               "type": "TextBlock",
                               "text": "The build and test completed successfully.",
-                              "color": "Good"  # This will make the success message green
+                              "color": "Good"
                             }
                           ],
                           "msteams": {
