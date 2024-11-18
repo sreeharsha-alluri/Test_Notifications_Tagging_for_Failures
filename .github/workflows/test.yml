@@ -18,7 +18,10 @@ jobs:
           echo "Building the project"
           # Simulate a successful build
           echo "Build completed successfully."
-          # exit 1
+          # To simulate failure or aborted, uncomment one of these lines:
+          # exit 1  # Simulate failure
+          # exit 0  # Simulate success
+          # exit 78  # Simulate aborted
           echo "status=success" >> $GITHUB_ENV
 
   overall_status:
@@ -35,9 +38,15 @@ jobs:
           if [[ "${{ needs.linux-build-and-test.result }}" == "success" ]]; then
             overall_status="success"
             notification_message="The build and test completed successfully."
-          else
+          elif [[ "${{ needs.linux-build-and-test.result }}" == "failure" ]]; then
             overall_status="failure"
             notification_message="The build and test failed. Please check the logs."
+          elif [[ "${{ needs.linux-build-and-test.result }}" == "cancelled" ]]; then
+            overall_status="aborted"
+            notification_message="The build and test was aborted."
+          else
+            overall_status="unknown"
+            notification_message="Unknown status."
           fi
           echo "overall_status=$overall_status" >> $GITHUB_OUTPUT
           echo "notification_message=$notification_message" >> $GITHUB_OUTPUT
@@ -57,7 +66,6 @@ jobs:
           action-name: ${{ github.workflow }}  # Pass the workflow name
           overall-status: ${{ needs.overall_status.outputs.overall_status }}  # Pass the overall status
           run-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}  # Pass the run URL
-          workflow-status: ${{ needs.overall_status.outputs.overall_status }}  # Pass the workflow status
           webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}  # Pass the webhook URL from secrets
           user1-name: ${{ secrets.TEAMS_USER1_NAME }}  # User 1 name from secrets
           user1-id: ${{ secrets.TEAMS_USER1_ID }}      # User 1 ID from secrets
