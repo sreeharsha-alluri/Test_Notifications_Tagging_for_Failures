@@ -44,9 +44,6 @@ jobs:
           elif [[ "${{ needs.linux-build-and-test.result }}" == "cancelled" ]]; then
             overall_status="aborted"
             notification_message="The build and test was aborted."
-          else
-            overall_status="unknown"
-            notification_message="Unknown status."
           fi
           echo "overall_status=$overall_status" >> $GITHUB_OUTPUT
           echo "notification_message=$notification_message" >> $GITHUB_OUTPUT
