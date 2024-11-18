@@ -19,9 +19,9 @@ jobs:
           # Simulate a successful build
           echo "Build completed successfully."
           # To simulate failure or aborted, uncomment one of these lines:
-          exit 1  # Simulate failure
+          # exit 1  # Simulate failure
           # exit 0  # Simulate success
-          # exit 78  # Simulate aborted
+          exit 78  # Simulate aborted
           echo "status=success" >> $GITHUB_ENV
 
   overall_status:
