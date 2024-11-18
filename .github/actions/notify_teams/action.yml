@@ -64,7 +64,7 @@ runs:
                             },
                             {
                               "type": "TextBlock",
-                              "text": "**Workflow Status:** Failure",
+                              "text": "**Workflow Status:** ❌ Failure",
                               "color": "Attention"
                             },
                             {
@@ -134,7 +134,7 @@ runs:
                             },
                             {
                               "type": "TextBlock",
-                              "text": "**Workflow Status:** Aborted",
+                              "text": "**Workflow Status:** ⚠️ Aborted",
                               "color": "Warning"
                             },
                             {
@@ -178,7 +178,7 @@ runs:
                             },
                             {
                               "type": "TextBlock",
-                              "text": "**Workflow Status:** Success",
+                              "text": "**Workflow Status:** ✅ Success",
                               "color": "Good"  # This will make the "Workflow Status" line green
                             },
                             {
